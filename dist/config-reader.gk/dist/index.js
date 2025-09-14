@@ -16,9 +16,7 @@ var ConfigReader = class {
 		const configFilePath = ["glitchkids.config.ts", "glitchkids.config.js"].filter((file) => this.#fileSystem.isExists(file));
 		if (configFilePath.length === 0) throw new ConfigFileNotfound();
 		const configPath = this.#fileSystem.joinPath(this.#fileSystem.getProjectBaseRoot(), configFilePath[0]);
-		const config = await jiti.import(configPath, { default: true });
-		console.log(config);
-		this.#config = config;
+		this.#config = await jiti.import(configPath, { default: true });
 	}
 	getConfig(name) {
 		return this.#config[name];

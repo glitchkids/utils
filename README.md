@@ -21,4 +21,4 @@
 
 ## License
 
-[MIT](https://github.com/glitchkids/barrel.gk/blob/development/LICENSE)
+[MIT](https://github.com/glitchkids/utils/blob/development/LICENSE)

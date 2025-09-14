@@ -1,4 +1,4 @@
-import { IFileSystemAdapter } from "@glithkids-adapters/file-system";
+import { IFileSystemAdapter } from "@glitchkids-utils/file-system";
 
 //#region src/config-reader.d.ts
 type TConfigDependencies = {

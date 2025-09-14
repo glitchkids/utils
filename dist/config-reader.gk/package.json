@@ -22,7 +22,7 @@
     "tsdown": "^0.15.1",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
-    "@glitchkids-adapters/file-system": "github:glitchkids/file-system.gk"
+    "@glitchkids-utils/file-system": "workspace:*"
   },
   "dependencies": {
     "jiti": "^2.5.1"
