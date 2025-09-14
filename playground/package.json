@@ -1,0 +1,22 @@
+{
+  "name": "@glitchkids-utils/playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node ./src/main.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.3",
+  "devDependencies": {
+    "@tsconfig/node24": "^24.0.1",
+    "@types/node": "^24.3.3",
+    "tsdown": "^0.15.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "@glitchkids-utils/file-system": "github:glitchkids/file-system.gk",
+    "@glitchkids-utils/config-reader": "workspace:*"
+  }
+}
