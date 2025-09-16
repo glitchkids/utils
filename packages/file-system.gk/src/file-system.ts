@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
-import { join } from "node:path";
+import { join, parse } from "node:path";
 import fg from "fast-glob";
 
 export type TDirectoryItem = {
@@ -14,6 +14,14 @@ type GlobOptionsParameters = {
   ignore?: string[];
 };
 
+type TParsePath = {
+  dir: string;
+  root: string;
+  base: string;
+  name: string;
+  ext: string;
+};
+
 export interface IFileSystemAdapter {
   joinPath(...path: string[]): string;
   getProjectBaseRoot(): string;
@@ -22,6 +30,7 @@ export interface IFileSystemAdapter {
   readFile(path: string): string;
   isExists(path: string): boolean;
   glob(options: GlobOptionsParameters): TDirectoryItem[];
+  parsePath(path: string): TParsePath;
 }
 
 export class FileSystem implements IFileSystemAdapter {
@@ -44,7 +53,6 @@ export class FileSystem implements IFileSystemAdapter {
       isDirectory: item.isDirectory(),
     }));
   }
-
   readFile(path: string): string {
     return readFileSync(path, { encoding: "utf-8" });
   }
@@ -52,7 +60,6 @@ export class FileSystem implements IFileSystemAdapter {
   writeFile(path: string, content: string): void {
     writeFileSync(path, content, { encoding: "utf-8" });
   }
-
   glob({
     pattern = [],
     cwd = this.getProjectBaseRoot(),
@@ -69,5 +76,9 @@ export class FileSystem implements IFileSystemAdapter {
         path: f.path,
         isDirectory: f.dirent.isDirectory(),
       }));
+  }
+
+  parsePath(path: string): TParsePath {
+    return parse(path);
   }
 }

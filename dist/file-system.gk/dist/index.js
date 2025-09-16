@@ -1,5 +1,5 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, parse } from "node:path";
 import fg from "fast-glob";
 
 //#region src/file-system.ts
@@ -36,6 +36,9 @@ var FileSystem = class {
 			path: f.path,
 			isDirectory: f.dirent.isDirectory()
 		}));
+	}
+	parsePath(path) {
+		return parse(path);
 	}
 };
 

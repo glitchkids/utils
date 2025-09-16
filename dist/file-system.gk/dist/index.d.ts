@@ -10,6 +10,13 @@ type GlobOptionsParameters = {
   cwd?: string;
   ignore?: string[];
 };
+type TParsePath = {
+  dir: string;
+  root: string;
+  base: string;
+  name: string;
+  ext: string;
+};
 interface IFileSystemAdapter {
   joinPath(...path: string[]): string;
   getProjectBaseRoot(): string;
@@ -18,6 +25,7 @@ interface IFileSystemAdapter {
   readFile(path: string): string;
   isExists(path: string): boolean;
   glob(options: GlobOptionsParameters): TDirectoryItem[];
+  parsePath(path: string): TParsePath;
 }
 declare class FileSystem implements IFileSystemAdapter {
   getProjectBaseRoot(): string;
@@ -31,6 +39,7 @@ declare class FileSystem implements IFileSystemAdapter {
     cwd,
     ignore
   }: GlobOptionsParameters): TDirectoryItem[];
+  parsePath(path: string): TParsePath;
 }
 //#endregion
 export { FileSystem, IFileSystemAdapter, TDirectory, TDirectoryItem };
