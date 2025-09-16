@@ -1,6 +1,6 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { sync } from "fast-glob";
+import fg from "fast-glob";
 
 //#region src/file-system.ts
 var FileSystem = class {
@@ -26,11 +26,16 @@ var FileSystem = class {
 	writeFile(path, content) {
 		writeFileSync(path, content, { encoding: "utf-8" });
 	}
-	glob({ pattern, cwd, ignore = [] }) {
-		return sync(pattern, {
+	glob({ pattern = [], cwd = this.getProjectBaseRoot(), ignore = [] }) {
+		return fg.sync(pattern, {
 			ignore,
-			cwd
-		});
+			cwd,
+			objectMode: true
+		}).map((f) => ({
+			name: f.name,
+			path: f.path,
+			isDirectory: f.dirent.isDirectory()
+		}));
 	}
 };
 

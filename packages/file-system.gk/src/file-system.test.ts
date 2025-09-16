@@ -12,4 +12,7 @@ describe("file-system.gk", () => {
   it("readDirectory", () => {
     console.log(fileSystem.readDirectory(fileSystem.getProjectBaseRoot()));
   });
+  it("glob", () => {
+    console.log(fileSystem.glob({ pattern: ["**/**.test.ts"] }));
+  });
 });

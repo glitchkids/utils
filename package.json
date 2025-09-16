@@ -4,8 +4,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "deploy:file-system": "pnpm deploy -F @glitchkids-utils/file-system --prod --legacy ./dist/file-system.gk",
-    "deploy:config-reader": "pnpm deploy -F @glitchkids-utils/config-reader --prod --legacy ./dist/config-reader.gk"
+    "deploy:file-system": "pnpm deploy -F @glitchkids-utils/file-system --prod --legacy --force ./dist/file-system.gk",
+    "deploy:config-reader": "pnpm deploy -F @glitchkids-utils/config-reader --prod --legacy --force ./dist/config-reader.gk"
   },
   "license": "MIT",
   "packageManager": "pnpm@10.12.3"

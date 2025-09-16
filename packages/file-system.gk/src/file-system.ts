@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
-import { sync as globSync } from "fast-glob";
+import fg from "fast-glob";
 
 export type TDirectoryItem = {
   path: string;
@@ -21,7 +21,7 @@ export interface IFileSystemAdapter {
   readDirectory(path: string): TDirectory;
   readFile(path: string): string;
   isExists(path: string): boolean;
-  glob(options: GlobOptionsParameters): string[];
+  glob(options: GlobOptionsParameters): TDirectoryItem[];
 }
 
 export class FileSystem implements IFileSystemAdapter {
@@ -57,10 +57,17 @@ export class FileSystem implements IFileSystemAdapter {
     pattern = [],
     cwd = this.getProjectBaseRoot(),
     ignore = [],
-  }: GlobOptionsParameters) {
-    return globSync(pattern, {
-      ignore,
-      cwd,
-    });
+  }: GlobOptionsParameters): TDirectoryItem[] {
+    return fg
+      .sync(pattern, {
+        ignore,
+        cwd,
+        objectMode: true,
+      })
+      .map((f) => ({
+        name: f.name,
+        path: f.path,
+        isDirectory: f.dirent.isDirectory(),
+      }));
   }
 }

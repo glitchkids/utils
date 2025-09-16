@@ -17,7 +17,7 @@ interface IFileSystemAdapter {
   readDirectory(path: string): TDirectory;
   readFile(path: string): string;
   isExists(path: string): boolean;
-  glob(options: GlobOptionsParameters): string[];
+  glob(options: GlobOptionsParameters): TDirectoryItem[];
 }
 declare class FileSystem implements IFileSystemAdapter {
   getProjectBaseRoot(): string;
@@ -30,7 +30,7 @@ declare class FileSystem implements IFileSystemAdapter {
     pattern,
     cwd,
     ignore
-  }: GlobOptionsParameters): string[];
+  }: GlobOptionsParameters): TDirectoryItem[];
 }
 //#endregion
 export { FileSystem, IFileSystemAdapter, TDirectory, TDirectoryItem };

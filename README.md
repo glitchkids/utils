@@ -1,6 +1,6 @@
 # Glitch Kids : Utils Packages
 
-- file-system.gk : Adapter of "node:fs" & "node:path".
+- file-system.gk : Adapter of `node:fs`, `node:path` & `fast-glob`.
 - config-reader.gk : Utility package to read "glitchkids.config.js/ts" files.
 
 ## Installation
