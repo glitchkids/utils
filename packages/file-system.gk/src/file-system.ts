@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
+import { sync as globSync } from "fast-glob";
 
 export type TDirectoryItem = {
   path: string;
@@ -7,6 +8,11 @@ export type TDirectoryItem = {
   name: string;
 };
 export type TDirectory = TDirectoryItem[];
+type GlobOptionsParameters = {
+  pattern: string[];
+  cwd?: string;
+  ignore?: string[];
+};
 
 export interface IFileSystemAdapter {
   joinPath(...path: string[]): string;
@@ -15,6 +21,7 @@ export interface IFileSystemAdapter {
   readDirectory(path: string): TDirectory;
   readFile(path: string): string;
   isExists(path: string): boolean;
+  glob(options: GlobOptionsParameters): string[];
 }
 
 export class FileSystem implements IFileSystemAdapter {
@@ -44,5 +51,16 @@ export class FileSystem implements IFileSystemAdapter {
 
   writeFile(path: string, content: string): void {
     writeFileSync(path, content, { encoding: "utf-8" });
+  }
+
+  glob({
+    pattern = [],
+    cwd = this.getProjectBaseRoot(),
+    ignore = [],
+  }: GlobOptionsParameters) {
+    return globSync(pattern, {
+      ignore,
+      cwd,
+    });
   }
 }

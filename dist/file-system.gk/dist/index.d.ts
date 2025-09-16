@@ -5,6 +5,11 @@ type TDirectoryItem = {
   name: string;
 };
 type TDirectory = TDirectoryItem[];
+type GlobOptionsParameters = {
+  pattern: string[];
+  cwd?: string;
+  ignore?: string[];
+};
 interface IFileSystemAdapter {
   joinPath(...path: string[]): string;
   getProjectBaseRoot(): string;
@@ -12,6 +17,7 @@ interface IFileSystemAdapter {
   readDirectory(path: string): TDirectory;
   readFile(path: string): string;
   isExists(path: string): boolean;
+  glob(options: GlobOptionsParameters): string[];
 }
 declare class FileSystem implements IFileSystemAdapter {
   getProjectBaseRoot(): string;
@@ -20,6 +26,11 @@ declare class FileSystem implements IFileSystemAdapter {
   readDirectory(path: string): TDirectory;
   readFile(path: string): string;
   writeFile(path: string, content: string): void;
+  glob({
+    pattern,
+    cwd,
+    ignore
+  }: GlobOptionsParameters): string[];
 }
 //#endregion
 export { FileSystem, IFileSystemAdapter, TDirectory, TDirectoryItem };

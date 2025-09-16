@@ -1,5 +1,6 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { sync } from "fast-glob";
 
 //#region src/file-system.ts
 var FileSystem = class {
@@ -24,6 +25,12 @@ var FileSystem = class {
 	}
 	writeFile(path, content) {
 		writeFileSync(path, content, { encoding: "utf-8" });
+	}
+	glob({ pattern, cwd, ignore = [] }) {
+		return sync(pattern, {
+			ignore,
+			cwd
+		});
 	}
 };
 
