@@ -15,4 +15,7 @@ describe("file-system.gk", () => {
   it("glob", () => {
     console.log(fileSystem.glob({ pattern: ["**/**.test.ts"] }));
   });
+  it("writeFile force", () => {
+    fileSystem.writeFile("tests/file.txt", "Yo", { force: true });
+  });
 });

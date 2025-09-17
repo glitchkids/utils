@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, parse } from "node:path";
 import fg from "fast-glob";
 
@@ -23,7 +23,12 @@ var FileSystem = class {
 	readFile(path) {
 		return readFileSync(path, { encoding: "utf-8" });
 	}
-	writeFile(path, content) {
+	writeFile(path, content, opts) {
+		if (!opts?.force) {
+			writeFileSync(path, content, { encoding: "utf-8" });
+			return;
+		}
+		if (!this.isExists(path)) mkdirSync(this.parsePath(path).dir, { recursive: true });
 		writeFileSync(path, content, { encoding: "utf-8" });
 	}
 	glob({ pattern = [], cwd = this.getProjectBaseRoot(), ignore = [] }) {

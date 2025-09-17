@@ -1,4 +1,10 @@
-import { readdirSync, readFileSync, writeFileSync, existsSync } from "node:fs";
+import {
+  readdirSync,
+  readFileSync,
+  writeFileSync,
+  existsSync,
+  mkdirSync,
+} from "node:fs";
 import { join, parse } from "node:path";
 import fg from "fast-glob";
 
@@ -22,10 +28,14 @@ type TParsePath = {
   ext: string;
 };
 
+type TWriteFileOptions = {
+  force: boolean;
+};
+
 export interface IFileSystemAdapter {
   joinPath(...path: string[]): string;
   getProjectBaseRoot(): string;
-  writeFile(path: string, content: string): void;
+  writeFile(path: string, content: string, opts?: TWriteFileOptions): void;
   readDirectory(path: string): TDirectory;
   readFile(path: string): string;
   isExists(path: string): boolean;
@@ -57,7 +67,14 @@ export class FileSystem implements IFileSystemAdapter {
     return readFileSync(path, { encoding: "utf-8" });
   }
 
-  writeFile(path: string, content: string): void {
+  writeFile(path: string, content: string, opts?: TWriteFileOptions): void {
+    if (!opts?.force) {
+      writeFileSync(path, content, { encoding: "utf-8" });
+      return;
+    }
+
+    if (!this.isExists(path))
+      mkdirSync(this.parsePath(path).dir, { recursive: true });
     writeFileSync(path, content, { encoding: "utf-8" });
   }
   glob({

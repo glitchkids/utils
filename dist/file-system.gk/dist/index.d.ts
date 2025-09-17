@@ -17,10 +17,13 @@ type TParsePath = {
   name: string;
   ext: string;
 };
+type TWriteFileOptions = {
+  force: boolean;
+};
 interface IFileSystemAdapter {
   joinPath(...path: string[]): string;
   getProjectBaseRoot(): string;
-  writeFile(path: string, content: string): void;
+  writeFile(path: string, content: string, opts?: TWriteFileOptions): void;
   readDirectory(path: string): TDirectory;
   readFile(path: string): string;
   isExists(path: string): boolean;
@@ -33,7 +36,7 @@ declare class FileSystem implements IFileSystemAdapter {
   joinPath(...path: string[]): string;
   readDirectory(path: string): TDirectory;
   readFile(path: string): string;
-  writeFile(path: string, content: string): void;
+  writeFile(path: string, content: string, opts?: TWriteFileOptions): void;
   glob({
     pattern,
     cwd,
