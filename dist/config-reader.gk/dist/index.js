@@ -18,10 +18,7 @@ var ConfigReader = class {
 		const configPath = this.#fileSystem.joinPath(this.#fileSystem.getProjectBaseRoot(), configFilePath[0]);
 		this.#config = await jiti.import(configPath, { default: true });
 	}
-	getConfig(name) {
-		return this.#config[name];
-	}
-	getAllConfig() {
+	getConfig() {
 		return this.#config;
 	}
 };

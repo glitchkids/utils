@@ -7,6 +7,7 @@ import {
 } from "node:fs";
 import { join, parse } from "node:path";
 import fg from "fast-glob";
+import watcher from "@parcel/watcher";
 
 export type TDirectoryItem = {
   path: string;
@@ -31,6 +32,11 @@ type TParsePath = {
 type TWriteFileOptions = {
   force: boolean;
 };
+type TGetWatcherParameters = {
+  ignore?: string[];
+  root?: string;
+  onChange: (event: { type: string; path: string }) => void;
+};
 
 export interface IFileSystemAdapter {
   joinPath(...path: string[]): string;
@@ -41,6 +47,9 @@ export interface IFileSystemAdapter {
   isExists(path: string): boolean;
   glob(options: GlobOptionsParameters): TDirectoryItem[];
   parsePath(path: string): TParsePath;
+  getWatcher(
+    options: TGetWatcherParameters
+  ): ReturnType<typeof watcher.subscribe>;
 }
 
 export class FileSystem implements IFileSystemAdapter {
@@ -93,6 +102,23 @@ export class FileSystem implements IFileSystemAdapter {
         path: f.path,
         isDirectory: f.dirent.isDirectory(),
       }));
+  }
+
+  getWatcher({
+    ignore = [],
+    onChange,
+    root = "./",
+  }: TGetWatcherParameters): ReturnType<typeof watcher.subscribe> {
+    return watcher.subscribe(
+      root,
+      (_, e) =>
+        e.forEach((e) => {
+          onChange(e);
+        }),
+      {
+        ignore,
+      }
+    );
   }
 
   parsePath(path: string): TParsePath {

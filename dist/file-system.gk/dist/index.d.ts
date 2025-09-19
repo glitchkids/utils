@@ -1,3 +1,5 @@
+import watcher from "@parcel/watcher";
+
 //#region src/file-system.d.ts
 type TDirectoryItem = {
   path: string;
@@ -20,6 +22,14 @@ type TParsePath = {
 type TWriteFileOptions = {
   force: boolean;
 };
+type TGetWatcherParameters = {
+  ignore?: string[];
+  root?: string;
+  onChange: (event: {
+    type: string;
+    path: string;
+  }) => void;
+};
 interface IFileSystemAdapter {
   joinPath(...path: string[]): string;
   getProjectBaseRoot(): string;
@@ -29,6 +39,7 @@ interface IFileSystemAdapter {
   isExists(path: string): boolean;
   glob(options: GlobOptionsParameters): TDirectoryItem[];
   parsePath(path: string): TParsePath;
+  getWatcher(options: TGetWatcherParameters): ReturnType<typeof watcher.subscribe>;
 }
 declare class FileSystem implements IFileSystemAdapter {
   getProjectBaseRoot(): string;
@@ -42,6 +53,11 @@ declare class FileSystem implements IFileSystemAdapter {
     cwd,
     ignore
   }: GlobOptionsParameters): TDirectoryItem[];
+  getWatcher({
+    ignore,
+    onChange,
+    root
+  }: TGetWatcherParameters): ReturnType<typeof watcher.subscribe>;
   parsePath(path: string): TParsePath;
 }
 //#endregion

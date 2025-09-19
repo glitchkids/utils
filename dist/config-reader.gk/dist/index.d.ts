@@ -10,8 +10,7 @@ declare class ConfigReader {
     fileSystem
   }: TConfigDependencies);
   load(): Promise<void>;
-  getConfig<T>(name: string): T;
-  getAllConfig(): Record<string, any>;
+  getConfig(): any[] | Record<string, any>;
 }
 //#endregion
 export { ConfigReader };

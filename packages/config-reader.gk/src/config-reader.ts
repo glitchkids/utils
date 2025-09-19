@@ -9,7 +9,7 @@ class ConfigFileNotfound extends Error {
 type TConfigDependencies = { fileSystem: IFileSystemAdapter };
 export class ConfigReader {
   #fileSystem: IFileSystemAdapter;
-  #config!: Record<string, any>;
+  #config!: Record<string, any> | any[];
 
   constructor({ fileSystem }: TConfigDependencies) {
     this.#fileSystem = fileSystem;
@@ -34,10 +34,7 @@ export class ConfigReader {
     this.#config = config;
   }
 
-  getConfig<T>(name: string) {
-    return this.#config[name] as T;
-  }
-  getAllConfig() {
+  getConfig() {
     return this.#config;
   }
 }

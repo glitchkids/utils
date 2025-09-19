@@ -24,6 +24,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "@parcel/watcher": "^2.5.1",
     "fast-glob": "^3.3.3"
   }
 }

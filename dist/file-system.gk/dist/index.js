@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join, parse } from "node:path";
 import fg from "fast-glob";
+import watcher from "@parcel/watcher";
 
 //#region src/file-system.ts
 var FileSystem = class {
@@ -41,6 +42,11 @@ var FileSystem = class {
 			path: f.path,
 			isDirectory: f.dirent.isDirectory()
 		}));
+	}
+	getWatcher({ ignore = [], onChange, root = "./" }) {
+		return watcher.subscribe(root, (_, e) => e.forEach((e$1) => {
+			onChange(e$1);
+		}), { ignore });
 	}
 	parsePath(path) {
 		return parse(path);

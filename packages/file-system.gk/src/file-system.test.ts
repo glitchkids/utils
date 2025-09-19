@@ -18,4 +18,19 @@ describe("file-system.gk", () => {
   it("writeFile force", () => {
     fileSystem.writeFile("tests/file.txt", "Yo", { force: true });
   });
+  it("watch", async () => {
+    const watcher = await fileSystem.getWatcher({
+      onChange(event) {
+        console.log(event);
+      },
+      ignore: ["!**/**.json"],
+    });
+
+    return await new Promise((resolve) => {
+      setTimeout(() => {
+        watcher.unsubscribe();
+        resolve();
+      }, 20000);
+    });
+  });
 });
