@@ -7,6 +7,12 @@
 
 **pnpm is recommended !**
 
+#### oop-toolbox.gk
+
+```bash
+  pnpm add glitchkids/utils#path:/dist/oop-toolbox.gk
+```
+
 #### file-system.gk
 
 ```bash
