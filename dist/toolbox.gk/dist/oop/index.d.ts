@@ -1,9 +1,9 @@
-//#region src/create-composite.d.ts
+//#region src/oop/create-composite.d.ts
 declare function createComposite<Mixins extends any[], MixinsType, Base>(name: string, base: typeof B): (mixinsCreate: Mixins, deps: any) => {
   new (...args: any[]): Base & MixinsType;
 };
 //#endregion
-//#region src/create-singleton.d.ts
+//#region src/oop/create-singleton.d.ts
 declare function createSingleton<D, I>(name: string, factory: (deps: D) => {
   new (...args: any[]): I;
 }): (deps: D) => {
@@ -13,7 +13,7 @@ declare function createSingleton<D, I>(name: string, factory: (deps: D) => {
   getInstance(): I;
 };
 //#endregion
-//#region src/create-mixin.d.ts
+//#region src/oop/create-mixin.d.ts
 declare function createMixin<Dependencies, Base, Interface>(name: string, factory: (supperclass: {
   new (...args: ConstructorParameters<typeof Base>): Base;
 }, deps: Dependencies) => {
@@ -22,7 +22,7 @@ declare function createMixin<Dependencies, Base, Interface>(name: string, factor
   new (...args: any[]): Interface & Base;
 };
 //#endregion
-//#region src/utility-types.d.ts
+//#region src/oop/utility-types.d.ts
 type UExtractConstructor<T> = ReturnType<ReturnType<T>>;
 type UExtractCreate<T> = ReturnType<T>;
 //#endregion

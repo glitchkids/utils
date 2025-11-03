@@ -1,4 +1,4 @@
-//#region src/create-composite.ts
+//#region src/oop/create-composite.ts
 function createComposite(name, base) {
 	return (mixinsCreate, deps) => {
 		const superclass = mixinsCreate.reduce((sc, mixinCreate) => mixinCreate(sc, deps), base);
@@ -9,7 +9,7 @@ function createComposite(name, base) {
 }
 
 //#endregion
-//#region src/create-singleton.ts
+//#region src/oop/create-singleton.ts
 function createSingleton(name, factory$1) {
 	return (deps) => class extends factory$1(deps) {
 		static objType = "singleton";
@@ -22,7 +22,7 @@ function createSingleton(name, factory$1) {
 }
 
 //#endregion
-//#region src/create-mixin.ts
+//#region src/oop/create-mixin.ts
 function createMixin(name, factory$1) {
 	return (superclass, deps) => class extends factory$1(superclass, deps) {
 		static objType = "mixin";
