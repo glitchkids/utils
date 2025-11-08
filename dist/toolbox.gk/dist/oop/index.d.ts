@@ -1,5 +1,5 @@
 //#region src/oop/create-composite.d.ts
-declare function createComposite<Mixins extends any[], MixinsType, Base>(name: string, base: typeof B): (mixinsCreate: Mixins, deps: any) => {
+declare function createComposite<CreateMixins extends any[], MixinsType, Base>(name: string, base: typeof Base): (mixinsCreate: CreateMixins, deps: Parameters<CreateMixins[number]>[1]) => {
   new (...args: any[]): Base & MixinsType;
 };
 //#endregion

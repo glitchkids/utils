@@ -1,15 +1,18 @@
-export function createComposite<Mixins extends any[], MixinsType, Base>(
+export function createComposite<CreateMixins extends any[], MixinsType, Base>(
   name: string,
-  base: typeof B,
+  base: typeof Base
 ) {
-  return (mixinsCreate: Mixins, deps: any) => {
+  return (
+    mixinsCreate: CreateMixins,
+    deps: Parameters<CreateMixins[number]>[1]
+  ) => {
     const superclass = mixinsCreate.reduce(
       (sc, mixinCreate) => mixinCreate(sc, deps),
-      base,
+      base
     );
 
-    return class Composite extends factory(superclass, deps) {
-      static objType: 'composite' = 'composite';
+    return class Composite extends superclass {
+      static objType: "composite" = "composite";
     } as { new (...args: any[]): Base & MixinsType };
   };
 }

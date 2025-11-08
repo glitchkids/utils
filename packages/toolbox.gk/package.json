@@ -1,7 +1,7 @@
 {
   "name": "@glitchkids-utils/toolbox",
   "author": "Glitch Kids Softwares",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Toolbox for Glitch Kids Development Workflow",
   "type": "module",
   "exports": {
@@ -14,7 +14,7 @@
       "default": "./dist/types/index.js"
     }
   },
-    "files": [
+  "files": [
     "dist"
   ],
   "scripts": {
